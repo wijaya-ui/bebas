@@ -1,0 +1,19 @@
+{
+  "overview": "Sistem manajemen stok barang responsive untuk single warehouse dengan pencatatan stok masuk, keluar, dan laporan.",
+  "features": [
+    "Dashboard ringkasan stok dan notifikasi kadaluarsa",
+    "Master data barang dengan SKU dan kategori",
+    "Pencatatan stok masuk dan keluar",
+    "Laporan pergerakan stok",
+    "Responsive design untuk desktop dan mobile"
+  ],
+  "category": "productivity",
+  "tags": [
+    "inventory",
+    "stock-management",
+    "warehouse",
+    "responsive",
+    "dashboard"
+  ],
+  "last_updated": "2026-06-25T04:46:33.611Z"
+}

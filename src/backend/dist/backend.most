@@ -1,0 +1,65 @@
+// Version: 3.0.0
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type ItemId__676618348 = Nat;
+type Item__322480688 =
+  {
+    category : Text;
+    currentStock : Nat;
+    expiryDate : ?Int;
+    id : ItemId__676618348;
+    minStock : Nat;
+    name : Text;
+    sku : Text;
+    unit : Text
+  };
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type Map__222667396<K, V> = Map__912772452<K, V>;
+type Map__709709801<K, V> =
+  {var root : Node__1000929467<K, V>; var size : Nat__1040412405};
+type Map__912772452<K, V> = Map__709709801<K, V>;
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type OldTask__334677346 =
+  {
+    completed : Bool;
+    dueDate : ?Int;
+    id : Nat;
+    notes : ?Text;
+    priority : Text;
+    title : Text
+  };
+type OldUser__655922588 = {displayName : Text};
+type StockMovement__223658606 =
+  {
+    date : Int;
+    id : Nat;
+    itemId : ItemId__676618348;
+    movementType : {#in_; #out};
+    note : Text;
+    quantity : Nat
+  };
+actor ({
+  in var nextTaskId : Nat;
+  in tasks :
+    Map__222667396<Principal, Map__222667396<Nat, OldTask__334677346>>;
+  in users : Map__222667396<Principal, OldUser__655922588>
+}, {
+  stable items :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?Item__322480688]];
+      var elementIndex : Nat__1040412405
+    };
+  stable movements :
+    {
+      var blockIndex : Nat__1040412405;
+      var blocks : [var [var ?StockMovement__223658606]];
+      var elementIndex : Nat__1040412405
+    };
+  stable state : {var nextItemId : Nat; var nextMovementId : Nat}
+});

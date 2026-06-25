@@ -1,0 +1,76 @@
+type StockStatus = 
+ variant {
+   low;
+   safe;
+ };
+type StockMovement = 
+ record {
+   date: int;
+   id: nat;
+   itemId: ItemId;
+   movementType: variant {
+                   in;
+                   out;
+                 };
+   note: text;
+   quantity: nat;
+ };
+type ItemInput = 
+ record {
+   category: text;
+   expiryDate: opt int;
+   minStock: nat;
+   name: text;
+   sku: text;
+   unit: text;
+ };
+type ItemId = nat;
+type Item = 
+ record {
+   category: text;
+   currentStock: nat;
+   expiryDate: opt int;
+   id: ItemId;
+   minStock: nat;
+   name: text;
+   sku: text;
+   unit: text;
+ };
+type DashboardSummary = 
+ record {
+   lowStockCount: nat;
+   nearExpiryCount: nat;
+   totalItems: nat;
+   totalStock: nat;
+ };
+service : {
+  __items: (io: opt nat, count: opt nat) -> (vec Item) query;
+  __movements: (io: opt nat, count: opt nat) -> (vec StockMovement) query;
+  __state: () -> (reserved) query;
+  createItem: (input: ItemInput) ->
+   (variant {
+      err: variant {invalidData: text;};
+      ok: ItemId;
+    });
+  deleteItem: (id: ItemId) -> (bool);
+  getDashboardSummary: () -> (DashboardSummary) query;
+  getItem: (id: ItemId) -> (opt Item) query;
+  getItemStockHistory: (itemId: ItemId) -> (vec StockMovement) query;
+  getMovementReport: (startDate: int, endDate: int) ->
+   (vec StockMovement) query;
+  getNearExpiryItems: () -> (vec Item) query;
+  getStockReport: (category: opt text, status: opt StockStatus) ->
+   (vec Item) query;
+  listItems: () -> (vec Item) query;
+  listStockIn: () -> (vec StockMovement) query;
+  listStockOut: () -> (vec StockMovement) query;
+  recordStockIn: (itemId: ItemId, quantity: nat, date: int, note: text) ->
+   (bool);
+  recordStockOut: (itemId: ItemId, quantity: nat, date: int, note: text) ->
+   (bool);
+  updateItem: (id: ItemId, input: ItemInput) ->
+   (variant {
+      err: variant {invalidData: text;};
+      ok: bool;
+    });
+}
